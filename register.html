@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register/Login - Kozy</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .toggle-buttons button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: var(--olive);
+      color: white;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .toggle-buttons button.active {
+      background-color: var(--gold);
+    }
+    .hidden { display: none; }
+    .error { color: red; }
+    .success { color: green; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Kozy</div>
+    <nav><a href="index.html" class="btn">Beranda</a></nav>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <div id="message"></div>
+
+      <div class="toggle-buttons">
+        <button id="btnLogin" class="active">Login</button>
+        <button id="btnDaftar">Daftar</button>
+      </div>
+
+      <!-- Form Login -->
+      <form id="formLogin" method="POST" onsubmit="return handleLogin(event)">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+        <button type="submit" class="btn" style="width:100%">Login</button>
+      </form>
+
+      <!-- Form Daftar -->
+      <form id="formDaftar" class="hidden" method="POST" onsubmit="return handleRegister(event)">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" name="nama" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+        <button type="submit" name="daftar" class="btn" style="width:100%">Daftar</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const btnLogin = document.getElementById("btnLogin");
+    const btnDaftar = document.getElementById("btnDaftar");
+    const formLogin = document.getElementById("formLogin");
+    const formDaftar = document.getElementById("formDaftar");
+    const messageDiv = document.getElementById("message");
+
+    // Simpan data pengguna di localStorage
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify([]));
+    }
+
+    btnLogin.onclick = () => {
+      formLogin.classList.remove("hidden");
+      formDaftar.classList.add("hidden");
+      btnLogin.classList.add("active");
+      btnDaftar.classList.remove("active");
+    };
+
+    btnDaftar.onclick = () => {
+      formLogin.classList.add("hidden");
+      formDaftar.classList.remove("hidden");
+      btnLogin.classList.remove("active");
+      btnDaftar.classList.add("active");
+    };
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const users = JSON.parse(localStorage.getItem('users'));
+      
+      const newUser = {
+        nama: formData.get('nama'),
+        email: formData.get('email'),
+        password: btoa(formData.get('password')) // Simple "hashing"
+      };
+
+      // Cek apakah email sudah terdaftar
+      const existingUser = users.find(user => user.email === newUser.email);
+      if (existingUser) {
+        showMessage("Email sudah terdaftar.", "error");
+        return false;
+      }
+
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      
+      showMessage("Registrasi berhasil! Silakan login.", "success");
+      btnLogin.click();
+      e.target.reset();
+      return false;
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const users = JSON.parse(localStorage.getItem('users'));
+      
+      const email = formData.get('email');
+      const password = btoa(formData.get('password'));
+
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = "index.html";
+      } else {
+        showMessage("Email atau password salah.", "error");
+      }
+      return false;
+    }
+
+    function showMessage(msg, type) {
+      messageDiv.innerHTML = `<p class="${type}">${msg}</p>`;
+    }
+
+    // Untuk simulasi logout
+    if (window.location.search.includes('logout=1')) {
+      localStorage.removeItem('currentUser');
+      window.location.href = "register.html";
+    }
+  </script>
+</body>
+</html>

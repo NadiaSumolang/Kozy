@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kozy - Kost Nyaman</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .kost-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .kost-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .kost-info {
+      padding: 1rem;
+    }
+
+    .kost-info h3 {
+      margin: 0 0 0.5rem 0;
+    }
+
+    .kost-info p {
+      color: #666;
+      margin: 0.3rem 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Kozy</div>
+    <nav id="navAuth">
+      <!-- Will be filled by JavaScript -->
+    </nav>
+  </header>
+
+  <main>
+    <h1 style="text-align:center; margin:1rem 0;">Temukan Kost Idamanmu</h1>
+
+    <div class="grid-container">
+      <!-- Kost Statis -->
+      <div class="kost-card">
+        <img src="images/kost1.jpg" alt="Kost Harmoni">
+        <div class="kost-info">
+          <h3>Kost Harmoni</h3>
+          <p>Rp 800.000/bulan</p>
+          <p>Jl. Mawar No.10</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+      
+      <div class="kost-card">
+        <img src="images/kost2.jpg" alt="Kost Pelangi">
+        <div class="kost-info">
+          <h3>Kost Pelangi</h3>
+          <p>Rp 750.000/bulan</p>
+          <p>Jl. Melati No.5</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+      
+      <div class="kost-card">
+        <img src="images/kost3.jpg" alt="Kost Bahagia">
+        <div class="kost-info">
+          <h3>Kost Bahagia</h3>
+          <p>Rp 900.000/bulan</p>
+          <p>Jl. Kenanga No.15</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+      
+      <div class="kost-card">
+        <img src="images/kost4.jpg" alt="Kost Damai">
+        <div class="kost-info">
+          <h3>Kost Damai</h3>
+          <p>Rp 850.000/bulan</p>
+          <p>Jl. Anggrek No.8</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+      
+      <div class="kost-card">
+        <img src="images/kost5.jpg" alt="Kost Sejahtera">
+        <div class="kost-info">
+          <h3>Kost Sejahtera</h3>
+          <p>Rp 950.000/bulan</p>
+          <p>Jl. Flamboyan No.12</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+      
+      <div class="kost-card">
+        <img src="images/kost6.jpg" alt="Kost Asri">
+        <div class="kost-info">
+          <h3>Kost Asri</h3>
+          <p>Rp 700.000/bulan</p>
+          <p>Jl. Kamboja No.3</p>
+          <button onclick="location.href='detail.html'" class="btn" style="width:100%; margin-top:0.5rem;">
+            Lihat Detail
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Kozy. Semua Hak Dilindungi.</p>
+  </footer>
+
+  <script>
+    // Check authentication status
+    document.addEventListener('DOMContentLoaded', function() {
+      const navAuth = document.getElementById('navAuth');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (currentUser) {
+        navAuth.innerHTML = `
+          <p style="margin-right: 10px;">Selamat datang, ${currentUser.nama}!</p>
+          <a href="register.html?logout=1" class="btn">Logout</a>
+        `;
+      } else {
+        navAuth.innerHTML = '<a href="register.html" class="btn">Login</a>';
+      }
+    });
+  </script>
+</body>
+</html>

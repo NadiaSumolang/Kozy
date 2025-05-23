@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Kost - Kozy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Kozy</div>
+    <nav>
+      <a href="index.html" class="btn">Beranda</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h2>Kost Melati</h2>
+      <img src="images/kost1.jpg" alt="Kost Melati" style="width:100%; margin:1rem 0; border-radius:8px;">
+      <p><strong>Rp 800.000 / bulan</strong></p>
+      <p>Jl. Mawar No.10, Dekat Kampus</p>
+      <ul style="margin:1rem 0; padding-left:1rem;">
+        <li>Kasur & lemari</li>
+        <li>Wi-Fi cepat</li>
+        <li>Kamar mandi dalam</li>
+      </ul>
+  
+      <!-- Form Pemesanan -->
+      <h3 style="margin-top:2rem;">Form Pemesanan</h3>
+      <form onsubmit="alert('Pesanan berhasil!'); return false;">
+        <div class="form-group">
+          <label>Tanggal Masuk</label>
+          <input type="date" required>
+        </div>
+        <div class="form-group">
+          <label>Durasi (bulan)</label>
+          <input type="number" min="1" required>
+        </div>
+        <button type="submit" class="btn" style="width:100%">Pesan Sekarang</button>
+      </form>
+  
+      <a href="index.html" style="display:block; text-align:center; margin-top:1rem;">← Kembali</a>
+    </div>
+  </main>
+</body>
+</html>
